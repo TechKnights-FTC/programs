@@ -1,8 +1,5 @@
 package com.qualcomm.ftcrobotcontroller.opmodes;
-
-/**
- * Created by CKMMKS on 12-01-2016.
- */
+// test tele op
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorController;
@@ -30,26 +27,28 @@ public class TK_1AutoOp extends LinearOpMode {
         waitForStart();
 
         forwardDrive(1);
-                Thread.sleep(1000);
-
+        Thread.sleep(1000);
+        stopMovement();
+        Thread.sleep(100);
         backwardDrive(2);
-                Thread.sleep(1220);
-
+        Thread.sleep(1000);
+        stopMovement();
+        Thread.sleep(100);
         turnLeft(1, 190);
-
+        Thread.sleep(500);
         stopMovement();
 
-        telemetry.addData("2 ", "motorFrontLeft:  " + String.format("%d", motorLeft.getTargetPosition()));
-        telemetry.addData("3 ", "motorFrontRight:  " + String.format("%d", motorRight.getTargetPosition()));
+
     }
-    public void forwardDrive(double power) {
+    public void forwardDrive(double abc) {
+
         motorLeft.setPower(.75);
         motorRight.setPower(.75);
     }
 
-    public void backwardDrive(double power){
-        motorLeft.setPower(.75);
-        motorRight.setPower(.75);
+    public void backwardDrive(double power)throws InterruptedException{
+        motorLeft.setPower(-.75);
+        motorRight.setPower(-.75);
     }
     public void turnLeft(double power, long time) throws InterruptedException{
         motorRight.setPower(.75);
