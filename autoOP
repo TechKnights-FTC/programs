@@ -1,0 +1,69 @@
+package com.qualcomm.ftcrobotcontroller.opmodes;
+
+
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorController;
+
+
+public class TK_1AutoOp extends LinearOpMode {
+
+    DcMotor motorRight, motorLeft;
+
+    @Override
+    public void runOpMode() throws InterruptedException {
+
+        double motorPowerLeft = 0.0;
+        double motorPowerRight = 0.0;
+
+        // set up the hardware devices we are going to use
+        motorLeft = hardwareMap.dcMotor.get("motor_1");
+        motorRight = hardwareMap.dcMotor.get("motor_2");
+
+        motorLeft.setDirection(DcMotor.Direction.REVERSE);
+
+        motorLeft.setChannelMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
+        motorRight.setChannelMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
+
+        // wait for the start button to be pressed
+        waitForStart();
+
+        forwardDrive(1);
+        Thread.sleep(1000);
+        stopMovement();
+        Thread.sleep(100);
+        backwardDrive(2);
+        Thread.sleep(1000);
+        stopMovement();
+        Thread.sleep(100);
+        turnLeft(1, 190);
+        Thread.sleep(500);
+        stopMovement();
+
+        motorLeft.setPower(motorPowerLeft);
+        motorRight.setPower(motorPowerRight);
+
+        telemetry.addData("left tgt pwr", "left  pwr: " + String.format("%.2f", Double.toString(motorPowerLeft)));
+        telemetry.addData("left tgt pwr", "left  pwr: " + String.format("%.2f",Double.toString(motorPowerLeft)));
+
+    }
+
+    public void forwardDrive(double power) {
+
+        motorLeft.setPower(.75);
+        motorRight.setPower(.75);
+    }
+
+    public void backwardDrive(double power)throws InterruptedException{
+        motorLeft.setPower(-.75);
+        motorRight.setPower(-.75);
+    }
+    public void turnLeft(double power, long time) throws InterruptedException{
+        motorRight.setPower(.75);
+        motorLeft.setPower(-.75);
+    }
+    public void stopMovement(){
+        motorLeft.setPower(0);
+        motorRight.setPower(0);
+    }
+}
